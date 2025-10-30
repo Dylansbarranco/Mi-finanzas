@@ -1,0 +1,154 @@
+/*
+  style.css — Estilos básicos para MiFinanza
+  - Paleta suave y legible
+  - Tipografía: Poppins (via Google Fonts)
+  - Layout con Flexbox / Grid
+  - Responsive para dispositivos móviles
+*/
+
+:root{
+  /* Paleta de colores suaves */
+  --bg: #f7fbff;        /* fondo general */
+  --card: #ffffff;      /* tarjetas/panels */
+  --muted: #6b7280;     /* textos secundarios */
+  --primary: #3b82f6;   /* azul suave */
+  --accent: #10b981;    /* verde para ingresos */
+  --danger: #ef4444;    /* rojo para egresos */
+  --border: #e6eef8;    /* bordes sutiles */
+  --shadow: 0 6px 18px rgba(15,23,42,0.06);
+
+  --radius: 10px;
+  --max-width: 1100px;
+}
+
+/* Reset básico */
+* { box-sizing: border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: #0f172a;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.4;
+}
+
+/* Contenedor central con margen y ancho máximo */
+.container{
+  width: calc(100% - 32px);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* Encabezado */
+.site-header{
+  background: linear-gradient(90deg, rgba(59,130,246,0.08), rgba(16,185,129,0.06));
+  border-bottom: 1px solid var(--border);
+}
+.site-header .container{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:20px 16px;
+}
+.site-header h1{
+  margin:0;
+  font-weight:600;
+  letter-spacing: -0.5px;
+}
+
+/* Layout principal: grid adaptativo */
+main.container{
+  display:grid;
+  grid-template-columns: 1fr 380px;
+  gap: 20px;
+  align-items:start;
+  margin-top:24px;
+}
+
+/* En pantallas pequeñas, usar una sola columna */
+@media (max-width: 820px){
+  main.container{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Paneles (formularios, listado, resumen) */
+.panel{
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.formulario label{
+  display:block;
+  margin-top:12px;
+  font-size:0.95rem;
+  color:var(--muted);
+}
+.formulario input[type="text"],
+.formulario input[type="number"],
+.formulario select{
+  width:100%;
+  padding:10px 12px;
+  margin-top:6px;
+  border-radius:8px;
+  border:1px solid #ddeaf8;
+  background: #fbfdff;
+}
+
+.formulario button{
+  margin-top:14px;
+  padding:10px 16px;
+  border-radius:8px;
+  border: none;
+  background: var(--primary);
+  color: white;
+  font-weight:600;
+  cursor:not-allowed; /* por ahora deshabilitado */
+}
+
+/* Tabla de movimientos: envoltorio para scroll horizontal en móviles */
+.table-wrapper{ overflow-x:auto; }
+table{ width:100%; border-collapse:collapse; }
+thead th{
+  text-align:left;
+  padding:12px 8px;
+  font-size:0.9rem;
+  color:var(--muted);
+}
+tbody td{
+  padding:12px 8px;
+  border-top:1px solid var(--border);
+}
+.empty-row td{ text-align:center; color:var(--muted); }
+
+/* Resumen (aside) */
+.resumen .balance{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 10px;
+  border-radius:8px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(250,250,255,0.9));
+}
+.resumen strong{
+  font-size:1.4rem;
+}
+
+/* Pie de página */
+.site-footer{
+  margin-top:28px;
+  padding:12px 0;
+  color:var(--muted);
+  text-align:center;
+}
+
+/* Pequeños ajustes para accesibilidad y toque en móvil */
+input, select, button{ font-size:1rem; }
+
+/* Nota: los estilos de color para ingresos/egresos se aplicarán junto con la lógica JS cuando esté lista */
