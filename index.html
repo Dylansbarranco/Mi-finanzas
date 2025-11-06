@@ -4,31 +4,72 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MiFinanza 💰</title>
-  <!-- Tipografía moderna: Poppins desde Google Fonts -->
+  <!-- Fuente Poppins desde Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <!-- Hoja de estilos principal -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- Encabezado principal del portal -->
+  <!-- Encabezado del sitio -->
   <header class="site-header">
     <div class="container">
-      <h1>MiFinanza 💰</h1>
-      <!-- Aquí podrían ir enlaces a otras secciones en el futuro -->
+      <div class="brand">
+        <div class="logo-placeholder">MF</div>
+        <div>
+          <h1>MiFinanza 💰</h1>
+          <div class="subtitle">Controla tus finanzas de forma simple</div>
+        </div>
+      </div>
+      <nav class="header-nav"><!-- Navegación principal / enlaces --></nav>
     </div>
   </header>
 
   <!-- Contenido principal: formulario, listado y resumen -->
   <main class="container">
 
-    <!-- Sección de formulario para registrar movimientos -->
+    <!-- Sección de estadísticas: tarjetas y gráfico -->
+    <section class="panel stats" aria-labelledby="titulo-stats">
+      <h2 id="titulo-stats">Estadísticas</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-title">Total ingresos</div>
+          <div class="stat-value" id="total-ingresos">$0.00</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-title">Total egresos</div>
+          <div class="stat-value" id="total-egresos">$0.00</div>
+        </div>
+        <div class="stat-card primary">
+          <div class="stat-title">Saldo disponible</div>
+          <div class="stat-value large" id="balance">$0.00</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-title">Transacciones</div>
+          <div class="stat-value" id="stats-count">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-title">Promedio ingreso</div>
+          <div class="stat-value" id="avg-ingreso">$0.00</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-title">Promedio egreso</div>
+          <div class="stat-value" id="avg-egreso">$0.00</div>
+        </div>
+      </div>
+
+      <div class="chart-area">
+        <!-- Canvas para gráfico de distribución ingresos vs egresos -->
+        <canvas id="chart-distribution" width="300" height="150" aria-label="Gráfico distribución ingresos y egresos"></canvas>
+      </div>
+    </section>
+
+    <!-- Formulario para registrar movimientos -->
     <section class="panel formulario" aria-labelledby="titulo-form">
       <h2 id="titulo-form">Registrar movimiento</h2>
-      <!-- Formulario: tipo (ingreso/egreso), descripción y monto -->
       <form id="movimiento-form" novalidate>
         <!-- Tipo de movimiento -->
         <label for="tipo">Tipo de movimiento</label>
-        <select id="tipo" name="tipo">
+        <select id="tipo" name="tipo"></select>
           <option value="ingreso">Ingreso</option>
           <option value="egreso">Egreso</option>
         </select>
@@ -41,16 +82,14 @@
         <label for="monto">Monto</label>
         <input type="number" id="monto" name="monto" placeholder="0.00" min="0" step="0.01" required>
 
-        <!-- Botón: por ahora no ejecuta lógica JS -->
-        <button type="submit" disabled>Agregar (pendiente JS)</button>
-        <!-- El botón está deshabilitado hasta que se implemente la lógica JS solicitada más adelante -->
+        <!-- Envío del formulario -->
+        <button type="submit">Agregar</button>
       </form>
     </section>
 
-    <!-- Sección de listado: tabla de movimientos registrados -->
+    <!-- Listado de movimientos -->
     <section class="panel listado" aria-labelledby="titulo-listado">
       <h2 id="titulo-listado">Movimientos</h2>
-      <!-- Tabla con encabezados semánticos. El cuerpo se llenará con JS en el futuro. -->
       <div class="table-wrapper">
         <table>
           <thead>
@@ -63,7 +102,7 @@
             </tr>
           </thead>
           <tbody id="movimientos-list">
-            <!-- Ejemplo de fila vacía / plantilla. Rellenar con JS más adelante. -->
+            <!-- Fila placeholder; será sustituida por las filas reales mediante JavaScript -->
             <tr class="empty-row">
               <td colspan="5">No hay movimientos registrados.</td>
             </tr>
@@ -72,29 +111,36 @@
       </div>
     </section>
 
-    <!-- Sección de resumen: muestra saldo total -->
+    <!-- Resumen con totales y saldo -->
     <aside class="panel resumen" aria-labelledby="titulo-resumen">
       <h2 id="titulo-resumen">Resumen</h2>
-      <!-- Saldo total (se actualizará con JS) -->
-      <div class="balance">
-        <span>Saldo total</span>
+      <div class="balance-row">
+        <span>Total ingresos</span>
+        <strong id="total-ingresos">$0.00</strong>
+      </div>
+      <div class="balance-row">
+        <span>Total egresos</span>
+        <strong id="total-egresos">$0.00</strong>
+      </div>
+      <div class="balance" style="margin-top:12px;">
+        <span>Saldo disponible</span>
         <strong id="balance">$0.00</strong>
       </div>
     </aside>
 
   </main>
 
-  <!-- Pie de página simple -->
+  <!-- Pie de página -->
   <footer class="site-footer">
     <div class="container">
       <small>MiFinanza — Proyecto inicial. &copy; <span id="anio"></span></small>
     </div>
   </footer>
 
-  <!-- Script principal: por ahora vacío (sin lógica) -->
+  <!-- Script principal de la aplicación -->
   <script src="js/app.js"></script>
   <script>
-    // Actualiza el año en el footer automáticamente (solo manipulación mínima del DOM)
+    // Actualiza el año en el footer
     document.getElementById('anio').textContent = new Date().getFullYear();
   </script>
 </body>

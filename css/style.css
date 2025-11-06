@@ -1,17 +1,17 @@
 /*
   style.css — Estilos básicos para MiFinanza
-  - Paleta suave y legible
-  - Tipografía: Poppins (via Google Fonts)
-  - Layout con Flexbox / Grid
-  - Responsive para dispositivos móviles
+  - Paleta de colores suave y accesible
+  - Tipografía: Poppins (Google Fonts)
+  - Diseño responsivo con Flexbox y Grid
+  - Optimizado para dispositivos móviles y escritorio
 */
 
 :root{
-  /* Paleta de colores suaves */
+  /* Paleta de colores y variables globales */
   --bg: #f7fbff;        /* fondo general */
   --card: #ffffff;      /* tarjetas/panels */
   --muted: #6b7280;     /* textos secundarios */
-  --primary: #3b82f6;   /* azul suave */
+  --primary: #3b82f6;   /* azul principal */
   --accent: #10b981;    /* verde para ingresos */
   --danger: #ef4444;    /* rojo para egresos */
   --border: #e6eef8;    /* bordes sutiles */
@@ -21,7 +21,7 @@
   --max-width: 1100px;
 }
 
-/* Reset básico */
+/* Reset y base tipográfica */
 * { box-sizing: border-box; }
 html,body{ height:100%; }
 body{
@@ -34,7 +34,7 @@ body{
   line-height:1.4;
 }
 
-/* Contenedor central con margen y ancho máximo */
+/* Contenedor principal: centrado y con ancho máximo */
 .container{
   width: calc(100% - 32px);
   max-width: var(--max-width);
@@ -42,7 +42,7 @@ body{
   padding: 16px;
 }
 
-/* Encabezado */
+/* Barra superior / encabezado del sitio */
 .site-header{
   background: linear-gradient(90deg, rgba(59,130,246,0.08), rgba(16,185,129,0.06));
   border-bottom: 1px solid var(--border);
@@ -59,7 +59,26 @@ body{
   letter-spacing: -0.5px;
 }
 
-/* Layout principal: grid adaptativo */
+.site-header .brand {
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.logo-placeholder{
+  width:44px;
+  height:44px;
+  border-radius:10px;
+  background: linear-gradient(135deg,var(--primary),var(--accent));
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-weight:700;
+}
+/* Subtítulo bajo el título en el header */
+.subtitle{ font-size:0.9rem; color:var(--muted); margin-top:2px; }
+
+/* Layout principal: grid con columna principal y columna lateral */
 main.container{
   display:grid;
   grid-template-columns: 1fr 380px;
@@ -68,14 +87,15 @@ main.container{
   margin-top:24px;
 }
 
-/* En pantallas pequeñas, usar una sola columna */
+/* Adaptación a pantallas pequeñas */
 @media (max-width: 820px){
   main.container{
     grid-template-columns: 1fr;
   }
+  .stats-grid{ grid-template-columns: repeat(2,1fr); }
 }
 
-/* Paneles (formularios, listado, resumen) */
+/* Paneles reutilizables (formularios, listados, tarjetas) */
 .panel{
   background: var(--card);
   border-radius: var(--radius);
@@ -84,6 +104,31 @@ main.container{
   border: 1px solid var(--border);
 }
 
+/* Estadísticas: grid y tarjetas individuales */
+.stats-grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:12px;
+  margin-bottom:12px;
+}
+.stat-card{
+  padding:12px;
+  border-radius:10px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,250,255,1));
+  border:1px solid var(--border);
+  text-align:left;
+}
+.stat-card.primary{
+  background: linear-gradient(90deg, rgba(59,130,246,0.09), rgba(16,185,129,0.04));
+}
+.stat-title{ color: var(--muted); font-size:0.85rem; }
+.stat-value{ font-weight:700; font-size:1.05rem; margin-top:6px; }
+.stat-value.large{ font-size:1.4rem; }
+
+.chart-area{ margin-top:8px; display:flex; justify-content:center; }
+canvas#chart-distribution{ max-width:100%; height:auto; }
+
+/* Formularios: etiquetas y campos */
 .formulario label{
   display:block;
   margin-top:12px;
@@ -109,10 +154,10 @@ main.container{
   background: var(--primary);
   color: white;
   font-weight:600;
-  cursor:not-allowed; /* por ahora deshabilitado */
+  cursor:pointer;
 }
 
-/* Tabla de movimientos: envoltorio para scroll horizontal en móviles */
+/* Tabla de movimientos: permite scroll horizontal en móviles */
 .table-wrapper{ overflow-x:auto; }
 table{ width:100%; border-collapse:collapse; }
 thead th{
@@ -127,7 +172,21 @@ tbody td{
 }
 .empty-row td{ text-align:center; color:var(--muted); }
 
-/* Resumen (aside) */
+/* Interacciones en filas de tabla */
+tbody tr{ transition: background .12s ease; }
+tbody tr:hover{ background: linear-gradient(90deg, rgba(0,0,0,0.01), rgba(0,0,0,0.02)); }
+
+/* Botón eliminar estilizado */
+button.btn-delete{
+  background:transparent;
+  color:var(--danger);
+  border:1px solid rgba(239,68,68,0.12);
+  padding:6px 10px;
+  border-radius:6px;
+}
+button.btn-delete:hover{ background: rgba(239,68,68,0.04); }
+
+/* Resumen lateral: balance y totales */
 .resumen .balance{
   display:flex;
   align-items:center;
@@ -148,7 +207,5 @@ tbody td{
   text-align:center;
 }
 
-/* Pequeños ajustes para accesibilidad y toque en móvil */
+/* Ajustes de tamaño de fuente para control táctil */
 input, select, button{ font-size:1rem; }
-
-/* Nota: los estilos de color para ingresos/egresos se aplicarán junto con la lógica JS cuando esté lista */
